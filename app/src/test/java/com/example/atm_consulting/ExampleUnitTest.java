@@ -1,4 +1,4 @@
-package com.example.atm_consultoria;
+package com.example.atm_consulting;
 
 import org.junit.Test;
 
