@@ -1,5 +1,7 @@
 package com.example.atm_consulting;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -25,27 +27,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // sending email
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                sendEmail();
             }
         });
+
+        // Drawerlauout and NavigationView, both required to use navigation drawer
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        // Note that menu ID is the same as the fragment on mobile_navigation.xml
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_services, R.id.nav_clients,
-                R.id.nav_email, R.id.nav_info
+                R.id.nav_home, R.id.nav_services,
+                R.id.nav_clients, R.id.nav_info
         )
                 .setDrawerLayout(drawer)
                 .build();
+
+        // navController host fragment that will show each tab
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        // Left Menu configuration making navigationView appear when this menu is clicked
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        // Conection of navigationView and fragment navController,
+        // Making navigationView, in did, work when one menu item is clicked
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    public void sendEmail() {
+        Intent intent = new Intent( Intent.ACTION_SEND);
+
+
+        intent.putExtra(Intent.EXTRA_EMAIL, "leonardo@lanytecnologia.com.br");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "App contact");
+        intent.putExtra(Intent.EXTRA_TEXT, "Hello, I want two quote some values ");
+
+        intent.setType("message/rfc822"); //right type of intent to send email
+        startActivity(intent.createChooser(intent, "Pick your e-mail app"));
     }
 
     @Override

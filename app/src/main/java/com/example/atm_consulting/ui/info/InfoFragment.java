@@ -3,6 +3,8 @@ package com.example.atm_consulting.ui.info;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +62,29 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+
+        String decription = "ATM Consulting have a mission to support organizations " +
+                "that want to reach success through excellence in management and by the " +
+                "search of qualified services";
+
+        Element version = new Element();
+        version.setTitle("Version 1.0");
+
+        return new AboutPage(getActivity())
+                .setImage(R.drawable.logo)
+                .setDescription(decription)
+
+                .addGroup("Social Newtwork")
+                .addFacebook("leonardorick", "Facebook")
+                .addInstagram("leonardorick_", "Instagram")
+                .addGitHub("LeonardoRick", "GitHub")
+                .addYoutube("UCvaZiIpmzfWxA3YV3dJNwnw", "YouTube")
+
+                .addGroup("Contact us")
+                .addEmail("atendimento@atmconsultoria.com.br", "Send an e-mail")
+                .addWebsite("https://google.com/", "Acess our website")
+
+                .addItem(version)
+                .create();
     }
 }
